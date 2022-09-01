@@ -3,6 +3,7 @@ from tkinter import CURRENT, TRUE
 import pygame
 import os
 from random import randint
+
 pygame.font.init()
 pygame.mixer.init()
 
@@ -26,18 +27,17 @@ BOMB = (50, 50)
 ARROW = (10, 65)
 SHIELD = (55, 20)
 
-
 ###CLASSES FOR SPRITES####
 class Tree(pygame.sprite.Sprite):
     def __init__(self,pos,group):
         super().__init__(group)
-        self.image = pygame.image.load(os.path.join(r"E:\Python Scripts\Environment_tree.png")).convert_alpha()
+        self.image = pygame.image.load(os.path.join(r"Environment_tree.png")).convert_alpha()
         self.rect = self.image.get_rect(topleft = pos)
 
 class Player(pygame.sprite.Sprite):
     def __init__(self,pos,group):
         super().__init__(group)
-        self.image = pygame.image.load(os.path.join(r"E:\Python Scripts\char_idle_down.png")).convert_alpha()
+        self.image = pygame.image.load(os.path.join(r"char_idle_down.png")).convert_alpha()
         self.rect = self.image.get_rect(center = pos)
         self.direct = pygame.math.Vector2()
         self.speed = 5
@@ -115,24 +115,24 @@ PROJECTILEVECTOR = (0,0)
 ###IMAGE FILES####
 
 #ENVIRONMENT IMAGES##
-grass_background = pygame.transform.scale(pygame.image.load(os.path.join(r"E:\Python Scripts\background_grass.png")), (WIDTH, HEIGHT))
-desert_background = pygame.transform.scale(pygame.image.load(os.path.join(r"E:\Python Scripts\background_sand.png")), (WIDTH/4, HEIGHT/4))
-env_tree = pygame.transform.scale(pygame.image.load(os.path.join(r"E:\Python Scripts\Environment_tree.png")), (125, 100))
-env_rock = pygame.transform.scale(pygame.image.load(os.path.join(r"E:\Python Scripts\environment_rock1.png")), (55, 55))
+grass_background = pygame.transform.scale(pygame.image.load(os.path.join(r"background_grass.png")), (WIDTH, HEIGHT))
+desert_background = pygame.transform.scale(pygame.image.load(os.path.join(r"background_sand.png")), (WIDTH/4, HEIGHT/4))
+env_tree = pygame.transform.scale(pygame.image.load(os.path.join(r"Environment_tree.png")), (125, 100))
+env_rock = pygame.transform.scale(pygame.image.load(os.path.join(r"environment_rock1.png")), (55, 55))
 
 #CHAR IMAGES##
-char_model_standby = pygame.transform.scale(pygame.image.load(os.path.join(r"E:\Python Scripts\char_idle_down.png")), (100,75))
-char_shieldup_image = pygame.transform.scale(pygame.image.load(os.path.join(r"E:\Python Scripts\character_shieldup_down.png")), (100,75))
-char_sword_attack_image = pygame.transform.scale(pygame.image.load(os.path.join(r"E:\Python Scripts\character_attack1_down.png")), (100,75))
-char_sword_powera_image = pygame.transform.scale(pygame.image.load(os.path.join(r"E:\Python Scripts\character_attack2_powerup_down.png")), (100,75))
-char_sword_powera_image2 = pygame.transform.scale(pygame.image.load(os.path.join(r"E:\Python Scripts\character_attack2_swing_down.png")), (100,75))
+char_model_standby = pygame.transform.scale(pygame.image.load(os.path.join(r"char_idle_down.png")), (100,75))
+char_shieldup_image = pygame.transform.scale(pygame.image.load(os.path.join(r"character_shieldup_down.png")), (100,75))
+char_sword_attack_image = pygame.transform.scale(pygame.image.load(os.path.join(r"character_attack1_down.png")), (100,75))
+char_sword_powera_image = pygame.transform.scale(pygame.image.load(os.path.join(r"character_attack2_powerup_down.png")), (100,75))
+char_sword_powera_image2 = pygame.transform.scale(pygame.image.load(os.path.join(r"character_attack2_swing_down.png")), (100,75))
 
 #WEAPON IMAGES##
-sword_image = pygame.transform.scale(pygame.image.load(os.path.join(r"E:\Python Scripts\bitsword.png")), (50,37))
-bomb_image_1 = pygame.transform.scale(pygame.image.load(os.path.join(r"E:\Python Scripts\weapon_energyball1.png")), (50,50)) 
-bomb_image_2 = pygame.transform.scale(pygame.image.load(os.path.join(r"E:\Python Scripts\weapon_energyball2.png")), (50,50))
-bomb_image_3 = pygame.transform.scale(pygame.image.load(os.path.join(r"E:\Python Scripts\weapon_energyball3.png")), (50,50))
-arrow_image = pygame.transform.scale(pygame.image.load(os.path.join(r"E:\Python Scripts\weapon_arrow1.png")), (50, 50))
+sword_image = pygame.transform.scale(pygame.image.load(os.path.join(r"bitsword.png")), (50,37))
+bomb_image_1 = pygame.transform.scale(pygame.image.load(os.path.join(r"weapon_energyball1.png")), (50,50)) 
+bomb_image_2 = pygame.transform.scale(pygame.image.load(os.path.join(r"weapon_energyball2.png")), (50,50))
+bomb_image_3 = pygame.transform.scale(pygame.image.load(os.path.join(r"weapon_energyball3.png")), (50,50))
+arrow_image = pygame.transform.scale(pygame.image.load(os.path.join(r"weapon_arrow1.png")), (50, 50))
 
 ##GROUPS###
 camera_group = CameraGroup()
@@ -215,18 +215,18 @@ def CHAR_MOVEMENT(keys_pressed, CHAR_RECT):
     ##HANDLE PROJECTILE WEAPON RANGE AND DIRECTION RELATIVE TO PLAYER DIRECTION###
     if CURRENT_WEAPON == BOMB:
         PROJECTILERANGE = 100
-    if CURRENT_WEAPON == ARROW:
+    elif CURRENT_WEAPON == ARROW:
         PROJECTILERANGE = 200    
-    if CURRENT_WEAPON == SWORD or CURRENT_WEAPON == SHIELD:
+    elif CURRENT_WEAPON == SWORD or CURRENT_WEAPON == SHIELD:
         PROJECTILERANGE = 0
 
     if VECTOR == UP:
         PROJECTILEVECTOR = (0, -PROJECTILERANGE)
-    if VECTOR == DOWN:
+    elif VECTOR == DOWN:
         PROJECTILEVECTOR = (0, PROJECTILERANGE)
-    if VECTOR == RIGHT:
+    elif VECTOR == RIGHT:
         PROJECTILEVECTOR = (PROJECTILERANGE, 0)
-    if VECTOR == LEFT:
+    elif VECTOR == LEFT:
         PROJECTILEVECTOR = (-PROJECTILERANGE, 0) 
 
 #-------^^^CHARACTER MOVEMENT FUNCTION ABOVE^^^------##
@@ -299,21 +299,21 @@ def main():
                 
                 
                 
-                if event.key == pygame.K_RCTRL:
+                if (event.key == pygame.K_RCTRL) and (len(HITBOXCOUNTER) < HITBOXMAX):
 
-                    if CURRENT_WEAPON == SWORD and len(HITBOXCOUNTER) < HITBOXMAX:
+                    if CURRENT_WEAPON == SWORD:
                         HIT_BOX = pygame.Rect(CHAR_RECT.x + xadj + xprojadj, CHAR_RECT.y + yadj + yprojadj, currentweaponwidth, currentweaponheight)
                         HITBOXCOUNTER.append(HIT_BOX)
                         
-                    if CURRENT_WEAPON == SHIELD and len(HITBOXCOUNTER) < HITBOXMAX:
+                    elif CURRENT_WEAPON == SHIELD:
                         HIT_BOX = pygame.Rect(CHAR_RECT.x + xadj + xprojadj, CHAR_RECT.y + yadj + yprojadj, currentweaponwidth, currentweaponheight)
                         HITBOXCOUNTER.append(HIT_BOX)
                     
-                    if CURRENT_WEAPON == BOMB and len(HITBOXCOUNTER) < HITBOXMAX:
+                    elif CURRENT_WEAPON == BOMB:
                         HIT_BOX = pygame.Rect(CHAR_RECT.x + xadj + xprojadj - 10, CHAR_RECT.y + yadj + yprojadj, currentweaponwidth, currentweaponheight)
                         HITBOXCOUNTER.append(HIT_BOX)
                     
-                    if CURRENT_WEAPON == ARROW and len(HITBOXCOUNTER) < HITBOXMAX:
+                    elif CURRENT_WEAPON == ARROW:
                         HIT_BOX = pygame.Rect(CHAR_RECT.x + xadj + xprojadj, CHAR_RECT.y + yadj + yprojadj, currentweaponwidth, currentweaponheight)
                         HITBOXCOUNTER.append(HIT_BOX)
                                        
@@ -322,11 +322,11 @@ def main():
             if CURRENT_WEAPON == SWORD:
                 if VECTOR == LEFT:
                     WIN.blit((pygame.transform.rotate(char_sword_attack_image ,270)), (CHAR_RECT.x, CHAR_RECT.y))#this adds a new image to the screen rather than changing the onscreen image for CHAR_RECT
-                if VECTOR == RIGHT:
+                elif VECTOR == RIGHT:
                     WIN.blit((pygame.transform.rotate(char_sword_attack_image ,90)), (CHAR_RECT.x, CHAR_RECT.y))    
-                if VECTOR == UP:
+                elif VECTOR == UP:
                     WIN.blit((pygame.transform.rotate(char_sword_attack_image ,180)), (CHAR_RECT.x, CHAR_RECT.y))
-                if VECTOR == DOWN:
+                elif VECTOR == DOWN:
                     WIN.blit((pygame.transform.rotate(char_sword_attack_image ,0)), (CHAR_RECT.x, CHAR_RECT.y))
                 
                 pygame.display.update()
@@ -334,26 +334,25 @@ def main():
                 HITBOXCOUNTER.remove(HIT_BOX)
                 
             
-            if CURRENT_WEAPON == SHIELD:
+            elif CURRENT_WEAPON == SHIELD:
                 if VECTOR == LEFT:
                     WIN.blit((pygame.transform.rotate(char_shieldup_image ,270)), (CHAR_RECT.x, CHAR_RECT.y))
-                if VECTOR == RIGHT:
+                elif VECTOR == RIGHT:
                     WIN.blit((pygame.transform.rotate(char_shieldup_image ,90)), (CHAR_RECT.x, CHAR_RECT.y))
-                if VECTOR == UP:
+                elif VECTOR == UP:
                     WIN.blit((pygame.transform.rotate(char_shieldup_image, 180)), (CHAR_RECT.x, CHAR_RECT.y))
-                if VECTOR == DOWN:
+                elif VECTOR == DOWN:
                     WIN.blit((pygame.transform.rotate(char_shieldup_image, 0)), (CHAR_RECT.x, CHAR_RECT.y))
                                 
                 pygame.display.update()
                 pygame.time.delay(250)
                 HITBOXCOUNTER.remove(HIT_BOX)
 
-            if CURRENT_WEAPON == BOMB:
+            elif CURRENT_WEAPON == BOMB:
                 WIN.blit(bomb_image_1, (HIT_BOX.x, HIT_BOX.y))
                 pygame.display.update()
                 pygame.time.delay(80)
                 
-
                 WIN.blit(bomb_image_2, (HIT_BOX.x, HIT_BOX.y))
                 pygame.display.update()
                 pygame.time.delay(80)
@@ -364,22 +363,20 @@ def main():
 
                 HITBOXCOUNTER.remove(HIT_BOX)
 
-            if CURRENT_WEAPON == ARROW:
+            elif CURRENT_WEAPON == ARROW:
                 if VECTOR == LEFT:
                     WIN.blit((pygame.transform.rotate(arrow_image, 270)),(HIT_BOX.x, HIT_BOX.y))
-                if VECTOR == RIGHT:
+                elif VECTOR == RIGHT:
                     WIN.blit((pygame.transform.rotate(arrow_image, 90)), (HIT_BOX.x, HIT_BOX.y))
-                if VECTOR == UP:
+                elif VECTOR == UP:
                     WIN.blit((pygame.transform.rotate(arrow_image, 180)), (HIT_BOX.x, HIT_BOX.y))
-                if VECTOR == DOWN:
+                elif VECTOR == DOWN:
                     WIN.blit((pygame.transform.rotate(arrow_image, 0)), (HIT_BOX.x, HIT_BOX.y))
-                
                 
                 pygame.display.update()
                 pygame.time.delay(150)
                 HITBOXCOUNTER.remove(HIT_BOX)
                                
-
 
         keys_pressed = pygame.key.get_pressed()
         CHAR_MOVEMENT(keys_pressed, CHAR_RECT)
