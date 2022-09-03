@@ -1,15 +1,38 @@
 from pickle import FALSE
 from tkinter import CURRENT, TRUE
-import pygame
+import pygame, sys
 import os
 from random import randint
+from zclonelevel import Level
 
 pygame.font.init()
 pygame.mixer.init()
 
+
 WIDTH, HEIGHT = 1440, 1080
-WIN = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("The Legend of Coq Shaddeaux")
+
+###BASIC SETUP THAT RUNS GAME####
+class Game:
+    def __init__(self):
+        #general setup
+        pygame.init()
+        self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
+        pygame.display.set_caption("The Legend of Coq Shaddeaux")
+        self.clock = pygame.time.Clock()
+
+    def run(self):
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+
+            self.screen.fill('black')
+            self.level.run()
+            pygame.display.update()
+            self.clock.tick(FPS)
+##^^^^-------GAME RUNNING FUNCTION ABOVE------^^^^###
+
 
 ####ITEMS AND VARIABLES#####
 
@@ -28,6 +51,8 @@ ARROW = (10, 65)
 SHIELD = (55, 20)
 
 ###CLASSES FOR SPRITES####
+
+##VISIBLE SPRITES###
 class Tree(pygame.sprite.Sprite):
     def __init__(self,pos,group):
         super().__init__(group)
@@ -93,6 +118,7 @@ class CameraGroup(pygame.sprite.Group):
            offset_pos = sprite.rect.topleft + self.offset 
            self.WIN.blit(sprite.image, offset_pos)
 
+##OBSTACLE SPRITES###
 
 ##CURRENT WEAPON###------**START WITH SWORD**---------
 global CURRENT_WEAPON
