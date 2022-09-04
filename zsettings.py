@@ -14,6 +14,12 @@ grass_background = pygame.transform.scale(pygame.image.load(os.path.join(r"backg
 desert_background = pygame.transform.scale(pygame.image.load(os.path.join(r"background_sand.png")), (WIDTH/4, HEIGHT/4))
 
 
+#WEAPON DATA##
+weapon_data = {
+    'sword': {'cooldown':100, 'dmg':15, 'graphic':r'E:\Python Scripts\LoCS2\LoCS\Assets\bitsword.png'}
+}
+
+
 WORLD_MAP = [
 ['tv','tv','tv','tv','tv','tv','tv','ov','tv','tv','tv','tv','tv','tv','tv','tv','tv','tv','tv','tv'],
 ['tv',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','tv'],

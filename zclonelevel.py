@@ -3,6 +3,7 @@ from ztile import *
 from zplayer import Player
 from zsettings import *
 from random import randint
+from zweapon import Weapon
 
 class Level:
     def __init__(self):
@@ -47,11 +48,14 @@ class Level:
                         Rock3((x,y),[self.visible_sprites, self.obstacle_sprites])
                 #display player model
                 if col == 'p':
-                    self.player = Player((x,y),[self.visible_sprites], self.obstacle_sprites, self.equipment_sprites)
+                    self.player = Player((x,y),[self.visible_sprites], self.obstacle_sprites, self.equipment_sprites, self.create_attack)
 
                 #display equipment/item objects
                 if col == 's1':
                     Screw1((x,y), [self.visible_sprites, self.equipment_sprites])
+
+    def create_attack(self):
+        Weapon(self.player, [self.visible_sprites])
 
     def run(self):
         #update and draw the game
