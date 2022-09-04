@@ -2,6 +2,7 @@ import pygame
 from ztile import *
 from zplayer import Player
 from zsettings import *
+from random import randint
 
 class Level:
     def __init__(self):
@@ -12,6 +13,7 @@ class Level:
        # sprite group setup
        self.visible_sprites = YSortCameraGroup()
        self.obstacle_sprites = pygame.sprite.Group()
+       self.equipment_sprites = pygame.sprite.Group()
 
        #sprite setup
        self.create_map()
@@ -23,13 +25,33 @@ class Level:
                 y = row_index * TILESIZE
                 
                 #display environment objects
-                if col == 'x':
-                    Tree((x,y),[self.visible_sprites, self.obstacle_sprites])
-                if col == 'r1':
-                    Rock1((x,y),[self.visible_sprites, self.obstacle_sprites])
+                if col == 'tv':
+                    treemodel = randint(1 , 4)
+                    if treemodel == 1:
+                        Tree1((x,y),[self.visible_sprites, self.obstacle_sprites])
+                    if treemodel == 2:
+                        Tree2((x,y),[self.visible_sprites, self.obstacle_sprites])
+                    if treemodel == 3:
+                        Tree3((x,y),[self.visible_sprites, self.obstacle_sprites])
+                    if treemodel == 4:
+                        Tree4((x,y),[self.visible_sprites, self.obstacle_sprites])
+                if col == 'ov':
+                    Ore1((x,y),[self.visible_sprites])
+                if col == 'rv':
+                    rockmodel = randint(1 , 3)
+                    if rockmodel == 1:
+                        Rock1((x,y),[self.visible_sprites, self.obstacle_sprites])
+                    if rockmodel == 2:
+                        Rock2((x,y),[self.visible_sprites, self.obstacle_sprites])
+                    if rockmodel == 3:
+                        Rock3((x,y),[self.visible_sprites, self.obstacle_sprites])
                 #display player model
                 if col == 'p':
-                    self.player = Player((x,y),[self.visible_sprites], self.obstacle_sprites, pygame.key.get_pressed)
+                    self.player = Player((x,y),[self.visible_sprites], self.obstacle_sprites, self.equipment_sprites)
+
+                #display equipment/item objects
+                if col == 's1':
+                    Screw1((x,y), [self.visible_sprites, self.equipment_sprites])
 
     def run(self):
         #update and draw the game

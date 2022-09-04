@@ -25,7 +25,7 @@ class Game:
                     pygame.quit()
                     sys.exit()
 
-            self.screen.fill('green')
+            self.screen.blit(grass_background, ORIGIN)
             self.level.run()
             pygame.display.update()
             self.clock.tick(FPS)

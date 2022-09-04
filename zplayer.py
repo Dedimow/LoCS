@@ -2,7 +2,11 @@ import pygame
 from zsettings import *
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, pos, groups, obstacle_sprites,):
+    
+    #initialize list for player inventory
+    player_inventory = []
+
+    def __init__(self, pos, groups, obstacle_sprites, equipment_sprites):
         super().__init__(groups)
         self.image = pygame.transform.scale(pygame.image.load('E:\Python Scripts\LoCS2\LoCS\Assets\char_idle_down.png'), (SCALEX, SCALEY)).convert_alpha()
         self.rect = self.image.get_rect(topleft = pos)
@@ -12,6 +16,7 @@ class Player(pygame.sprite.Sprite):
         self.speed = 5
 
         self.obstacle_sprites = obstacle_sprites
+        self.equipment_sprites = equipment_sprites
 
     def input(self,):
         keys = pygame.key.get_pressed()
@@ -46,6 +51,17 @@ class Player(pygame.sprite.Sprite):
         self.rect.center = self.hitbox.center
         
 
+    def item_pickup(self, player_inventory, equipment_sprites, visible_sprites):
+        for sprite in self.equipment_sprites:
+            if self.hitbox.x == sprite.hitbox.x or self.hitbox.y == sprite.hitbox.y:
+                player_inventory.append[sprite]
+                pygame.sprite.spritecollide(self.player, equipment_sprites,True)
+                pygame.sprite.spritecollide(self.player, visible_sprites,True)
+                self.visible_sprites.update()
+
+
+                
+
     def collision(self, direction):
         if direction == 'horizontal':
             for sprite in self.obstacle_sprites:
@@ -54,7 +70,8 @@ class Player(pygame.sprite.Sprite):
                         self.hitbox.right = sprite.hitbox.left
                     if self.direction.x < 0: #moving left
                         self.hitbox.left = sprite.hitbox.right
-        
+            
+            
         if direction == 'vertical':
             for sprite in self.obstacle_sprites:
                 if sprite.hitbox.colliderect(self.hitbox):              
@@ -62,6 +79,8 @@ class Player(pygame.sprite.Sprite):
                         self.hitbox.bottom = sprite.hitbox.top
                     if self.direction.y < 0: #moving up
                         self.hitbox.top = sprite.hitbox.bottom
+            
+           
 
 
     def update(self):
