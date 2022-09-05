@@ -9,12 +9,29 @@ class Player(pygame.sprite.Sprite):
     
     def __init__(self, pos, groups, obstacle_sprites, equipment_sprites, create_attack, destroy_weapon, switch_weapons):
         super().__init__(groups)
-        self.image = pygame.transform.scale(pygame.image.load('E:\Python Scripts\LoCS2\LoCS\Assets\char_idle_down.png'), (SCALEX, SCALEY)).convert_alpha()
-        self.rect = self.image.get_rect(topleft = pos)
-        self.hitbox = self.rect.inflate(0, -20)
 
         self.status = 'down'
+        player_image = pygame.transform.scale(pygame.image.load('E:\Python Scripts\LoCS2\LoCS\Assets\char_idle_down.png'), (SCALEX, SCALEY)).convert_alpha()
+        self.image = player_image
 
+        if self.status == 'down':
+            self.image = pygame.transform.rotate(player_image, 0)
+            self.rect = self.image.get_rect(topleft = pos)
+            self.hitbox = self.rect.inflate(0, -20)
+        elif self.status == 'up':
+            self.image = pygame.transform.rotate(player_image, 180)
+            self.rect = self.image.get_rect(topleft = pos)
+            self.hitbox = self.rect.inflate(0, -20)
+        elif self.status == 'left':
+            self.image = pygame.transform.rotate(player_image, 270)
+            self.rect = self.image.get_rect(topleft = pos)
+            self.hitbox = self.rect.inflate(0, -20)
+        elif self.status == 'right':
+            self.image = pygame.transform.rotate(player_image, 90)
+            self.rect = self.image.get_rect(topleft = pos)
+            self.hitbox = self.rect.inflate(0, -20)
+        
+        
         self.direction = pygame.math.Vector2()
         self.speed = 5
         self.attacking = False
@@ -33,13 +50,7 @@ class Player(pygame.sprite.Sprite):
         self.weapon_index = 0
         self.weapon = list(weapon_data.keys())[self.weapon_index]
 
-    def switch_weapons(self):
-        if self.weapon_index == 3:
-            self.weapon_index = 1
-        else:
-            self.weapon_index +=1
 
-        self.weapon = list(weapon_data.keys())[self.weapon_index]
 
     def input(self):
         keys = pygame.key.get_pressed()
@@ -70,7 +81,14 @@ class Player(pygame.sprite.Sprite):
 
         #switch weapons
         if keys[pygame.K_1]:
-            self.switch_weapons()
+            if self.weapon_index == 3:
+                self.weapon_index = 0
+                pygame.time.delay(WEAPON_SWITCH_DELAY)
+            else:
+                self.weapon_index +=1
+                pygame.time.delay(WEAPON_SWITCH_DELAY)
+
+            self.weapon = list(weapon_data.keys())[self.weapon_index]
             print(self.weapon)
             print(self.weapon_index)
 

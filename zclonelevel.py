@@ -20,7 +20,7 @@ class Level:
        self.current_attack = None
 
        #weapon selection
-       self.weapon_index = 0
+       self.switch_weapons = None
 
        #sprite setup
        self.create_map()
@@ -55,7 +55,7 @@ class Level:
                 
                 #display player model
                 if col == 'p':
-                    self.player = Player((x,y),[self.visible_sprites], self.obstacle_sprites, self.equipment_sprites, self.create_attack, self.destroy_weapon)
+                    self.player = Player((x,y),[self.visible_sprites], self.obstacle_sprites, self.equipment_sprites, self.create_attack, self.destroy_weapon, self.switch_weapons)
 
                 #display equipment/item objects
                 if col == 's1':
