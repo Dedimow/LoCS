@@ -19,6 +19,9 @@ class Level:
        #attack sprites
        self.current_attack = None
 
+       #weapon selection
+       self.weapon_index = 0
+
        #sprite setup
        self.create_map()
 
@@ -65,6 +68,8 @@ class Level:
         if self.current_attack:
             self.current_attack.kill()
         self.current_attack = None
+
+    
 
     def run(self):
         #update and draw the game

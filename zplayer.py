@@ -7,7 +7,7 @@ player_inventory = []
 
 class Player(pygame.sprite.Sprite):
     
-    def __init__(self, pos, groups, obstacle_sprites, equipment_sprites, create_attack, destroy_weapon):
+    def __init__(self, pos, groups, obstacle_sprites, equipment_sprites, create_attack, destroy_weapon, switch_weapons):
         super().__init__(groups)
         self.image = pygame.transform.scale(pygame.image.load('E:\Python Scripts\LoCS2\LoCS\Assets\char_idle_down.png'), (SCALEX, SCALEY)).convert_alpha()
         self.rect = self.image.get_rect(topleft = pos)
@@ -29,12 +29,19 @@ class Player(pygame.sprite.Sprite):
         #weapon
         self.create_attack = create_attack
         self.destroy_weapon = destroy_weapon
+        self.switch_weapons = switch_weapons
         self.weapon_index = 0
         self.weapon = list(weapon_data.keys())[self.weapon_index]
-        print(self.weapon)
-        
 
-    def input(self,):
+    def switch_weapons(self):
+        if self.weapon_index == 3:
+            self.weapon_index = 1
+        else:
+            self.weapon_index +=1
+
+        self.weapon = list(weapon_data.keys())[self.weapon_index]
+
+    def input(self):
         keys = pygame.key.get_pressed()
 
         if keys[pygame.K_UP]:
@@ -61,6 +68,12 @@ class Player(pygame.sprite.Sprite):
             self.attack_time = pygame.time.get_ticks()
             self.create_attack()
 
+        #switch weapons
+        if keys[pygame.K_1]:
+            self.switch_weapons()
+            print(self.weapon)
+            print(self.weapon_index)
+
     def move(self,speed):
         #normalize diagonal move speed
         if self.direction.magnitude() != 0:
@@ -75,6 +88,8 @@ class Player(pygame.sprite.Sprite):
         self.collision('vertical')
 
         self.rect.center = self.hitbox.center  
+
+
 
     def item_pickup(self, item_name):
                 print(item_name)
@@ -133,4 +148,5 @@ class Player(pygame.sprite.Sprite):
     def update(self):
         self.input()
         self.cooldowns()
+        
         self.move(self.speed)

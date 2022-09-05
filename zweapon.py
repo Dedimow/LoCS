@@ -1,4 +1,6 @@
 import pygame
+from zsettings import *
+
 
 class Weapon(pygame.sprite.Sprite):
     def __init__(self, player, groups):
@@ -6,7 +8,7 @@ class Weapon(pygame.sprite.Sprite):
         direction = player.status
 
         #graphic
-        full_path = r'E:\Python Scripts\LoCS2\LoCS\Assets\bitsword.png'
+        full_path = weapon_data[player.weapon]['graphic']
         
         
 

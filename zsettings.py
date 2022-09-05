@@ -16,7 +16,7 @@ desert_background = pygame.transform.scale(pygame.image.load(os.path.join(r"back
 
 #WEAPON DATA##
 weapon_data = {
-    'sword': {'cooldown':100, 'dmg':15, 'graphic':r'E:\Python Scripts\LoCS2\LoCS\Assets\bitsword.png'}, 
+    'sword': {'cooldown':100, 'dmg':15, 'graphic':r'E:\Python Scripts\LoCS2\LoCS\Assets\weapon_sword_lowres_walpha.png'}, 
     'bomb': {'cooldown':250, 'dmg' :30, 'graphic': r'E:\Python Scripts\LoCS2\LoCS\Assets\weapon_energyball1.png'},
     'arrow': {'cooldown': 150, 'dmg': 10, 'graphic':r'E:\Python Scripts\LoCS2\LoCS\Assets\weapon_arrow1.png'},
     'shield': {'cooldown':200, 'dmg': 25, 'graphic':r'E:\Python Scripts\LoCS2\LoCS\Assets\character_shieldup_down.png'}
