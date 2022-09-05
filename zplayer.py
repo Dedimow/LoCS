@@ -7,7 +7,7 @@ player_inventory = []
 
 class Player(pygame.sprite.Sprite):
     
-    def __init__(self, pos, groups, obstacle_sprites, equipment_sprites, create_attack):
+    def __init__(self, pos, groups, obstacle_sprites, equipment_sprites, create_attack, destroy_weapon):
         super().__init__(groups)
         self.image = pygame.transform.scale(pygame.image.load('E:\Python Scripts\LoCS2\LoCS\Assets\char_idle_down.png'), (SCALEX, SCALEY)).convert_alpha()
         self.rect = self.image.get_rect(topleft = pos)
@@ -28,9 +28,12 @@ class Player(pygame.sprite.Sprite):
 
         #weapon
         self.create_attack = create_attack
+        self.destroy_weapon = destroy_weapon
         self.weapon_index = 0
         self.weapon = list(weapon_data.keys())[self.weapon_index]
         print(self.weapon)
+        
+
     def input(self,):
         keys = pygame.key.get_pressed()
 
@@ -53,7 +56,7 @@ class Player(pygame.sprite.Sprite):
             self.direction.x = 0
 
         #attack input
-        if keys[pygame.K_SPACE]:
+        if keys[pygame.K_SPACE] and not self.attacking:
             self.attacking = True
             self.attack_time = pygame.time.get_ticks()
             self.create_attack()
@@ -118,10 +121,16 @@ class Player(pygame.sprite.Sprite):
                         
                         self.item_pickup(sprite)
             
-           
+    def cooldowns(self):
+        current_time = pygame.time.get_ticks()
+
+        if self.attacking:
+            if current_time - self.attack_time >= self.attack_cooldown:
+                self.attacking = False
+                self.destroy_weapon()           
 
 
     def update(self):
         self.input()
-        
+        self.cooldowns()
         self.move(self.speed)

@@ -16,6 +16,9 @@ class Level:
        self.obstacle_sprites = pygame.sprite.Group()
        self.equipment_sprites = pygame.sprite.Group()
 
+       #attack sprites
+       self.current_attack = None
+
        #sprite setup
        self.create_map()
 
@@ -46,16 +49,22 @@ class Level:
                         Rock2((x,y),[self.visible_sprites, self.obstacle_sprites])
                     if rockmodel == 3:
                         Rock3((x,y),[self.visible_sprites, self.obstacle_sprites])
+                
                 #display player model
                 if col == 'p':
-                    self.player = Player((x,y),[self.visible_sprites], self.obstacle_sprites, self.equipment_sprites, self.create_attack)
+                    self.player = Player((x,y),[self.visible_sprites], self.obstacle_sprites, self.equipment_sprites, self.create_attack, self.destroy_weapon)
 
                 #display equipment/item objects
                 if col == 's1':
                     Screw1((x,y), [self.visible_sprites, self.equipment_sprites])
 
     def create_attack(self):
-        Weapon(self.player, [self.visible_sprites])
+        self.current_attack = Weapon(self.player, [self.visible_sprites])
+
+    def destroy_weapon(self):
+        if self.current_attack:
+            self.current_attack.kill()
+        self.current_attack = None
 
     def run(self):
         #update and draw the game
